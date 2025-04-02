@@ -187,7 +187,6 @@ def masked_mae(preds, labels, null_val=np.nan):
     loss = torch.where(torch.isnan(loss), torch.zeros_like(loss), loss)
     return torch.mean(loss)
 
-
 def masked_mape(preds, labels, null_val=np.nan):
     if np.isnan(null_val):
         mask = ~torch.isnan(labels)
@@ -201,11 +200,30 @@ def masked_mape(preds, labels, null_val=np.nan):
     loss = torch.where(torch.isnan(loss), torch.zeros_like(loss), loss)
     return torch.mean(loss)
 
+def masked_wmape(preds, labels, null_val=np.nan):
+    if np.isnan(null_val):
+        mask = ~torch.isnan(labels)
+    else:
+        mask = (labels != null_val)
+
+    mask = mask.float()
+    mask /= torch.mean(mask)
+    mask = torch.where(torch.isnan(mask), torch.zeros_like(mask), mask)
+
+    abs_error = torch.abs(preds - labels) * mask
+    wmape = torch.sum(abs_error) / torch.sum(torch.abs(labels * mask))
+    wmape = torch.where(torch.isnan(wmape), torch.zeros_like(wmape), wmape)
+
+    return wmape
+
 
 def metric(pred, real):
+    eps = 1e-5  # 실제값이 0일 경우를 대비한 작은 상수
+    # wmape = (torch.abs((pred - real) / (real + eps))).mean().item() * 100
     mae = masked_mae(pred,real,0.0).item()
+    wmape = masked_wmape(pred,real,0.0).item()
     mape = masked_mape(pred,real,0.0).item()
     rmse = masked_rmse(pred,real,0.0).item()
-    return mae,mape,rmse
+    return mae,mape,rmse,wmape
 
 

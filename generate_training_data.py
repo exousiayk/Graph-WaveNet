@@ -10,7 +10,7 @@ import pandas as pd
 
 
 def generate_graph_seq2seq_io_data(
-        df, x_offsets, y_offsets, add_time_in_day=True, add_day_in_week=False, scaler=None
+        df, x_offsets, y_offsets, add_time_in_day=False, add_day_in_week=False, scaler=None
 ):
     """
     Generate samples from
@@ -62,7 +62,7 @@ def generate_train_val_test(args):
         df,
         x_offsets=x_offsets,
         y_offsets=y_offsets,
-        add_time_in_day=True,
+        add_time_in_day=False,
         add_day_in_week=args.dow,
     )
 

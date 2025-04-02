@@ -1,3 +1,34 @@
+
+// // train, test
+
+// {
+//     // Use IntelliSense to learn about possible attributes.
+//     // Hover to view descriptions of existing attributes.
+//     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+//     "version": "0.2.0",
+//     "configurations": [
+
+//         {
+//             "name": "Python Debugger: Current File",
+//             "type": "debugpy",
+//             "request": "launch",
+//             "program": "test.py",
+//             "console": "integratedTerminal",
+//             "justMyCode": true,
+//             "args" : [
+//                 "--gcn_bool", 
+//                 "--addaptadj",
+//                 "--randomadj",
+//                 "--in_dim", "1",
+//             ]
+//         }
+//     ]
+// }
+
+
+// // generate_data 
+
+
 {
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
@@ -9,9 +40,14 @@
             "name": "Python Debugger: Current File",
             "type": "debugpy",
             "request": "launch",
-            "program": "train.py",
+            "program": "masking_training_data.py",
             "console": "integratedTerminal",
-            "justMyCode": true
+            "justMyCode": true,
+            "args": [
+                "--output_dir", "data/MD",
+                "--traffic_df_filename", "data/MD/md_count.h5"
+                // "--add_time_in_day", "False"
+            ]
         }
     ]
 }

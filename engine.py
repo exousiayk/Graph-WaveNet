@@ -27,7 +27,8 @@ class trainer():
         self.optimizer.step()
         mape = util.masked_mape(predict,real,0.0).item()
         rmse = util.masked_rmse(predict,real,0.0).item()
-        return loss.item(),mape,rmse
+        wmape = util.masked_wmape(predict,real,0.0).item()
+        return loss.item(),mape,rmse, wmape
 
     def eval(self, input, real_val):
         self.model.eval()
@@ -40,4 +41,5 @@ class trainer():
         loss = self.loss(predict, real, 0.0)
         mape = util.masked_mape(predict,real,0.0).item()
         rmse = util.masked_rmse(predict,real,0.0).item()
-        return loss.item(),mape,rmse
+        wmape = util.masked_wmape(predict,real,0.0).item()
+        return loss.item(),mape,rmse, wmape
